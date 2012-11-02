@@ -84,7 +84,7 @@ class ReportRow
   end
 end
 
-class AccessLogReport
+class Report
   def initialize
     @column_headings = []
     @cell_classes = []
@@ -123,9 +123,9 @@ class AccessLogReport
   end
 end
 
-class AccessLogReportTest < MiniTest::Unit::TestCase
+class ReportTest < MiniTest::Unit::TestCase
   def setup
-    @report = AccessLogReport.new
+    @report = Report.new
     @report.add_column "Date", DateCell
     @report.add_column "Status 2xx", StatusCounter2xx
     @report.add_column "Status 3xx", StatusCounter3xx
@@ -196,7 +196,7 @@ class AccessLogReportTest < MiniTest::Unit::TestCase
       a_report_row(date: "01/Aug/2011", count_4xx: 1),
     ], @report.rows
   end
-
+  
   private
   
   def an_access(access_data)
@@ -211,5 +211,42 @@ class AccessLogReportTest < MiniTest::Unit::TestCase
     row.add_cell ReportCell.new(data[:count_4xx] || 0)
     row.add_cell ReportCell.new(data[:count_5xx] || 0)
     return row
+  end
+end
+
+class FixedWidthTextOutput
+  def initialize(width)
+    @width = width
+    @output = ""
+  end
+
+  def <<(row)
+    print_row(row)
+  end
+  
+  def to_s
+    @output
+  end
+  
+  private
+  
+  def print_row(row)
+    row.each do |field|
+      print_field(field)
+    end
+    @output += "\n"    
+  end
+  
+  def print_field(content)
+    @output += sprintf("%#{@width}s", content)
+  end
+end
+
+class OutputTest < MiniTest::Unit::TestCase
+  def test_case_name
+    output = FixedWidthTextOutput.new(3)
+    output << ["XY", "Z"]
+    output << ["a", "b"]
+    assert_equal " XY  Z\n  a  b\n", output.to_s
   end
 end
