@@ -36,11 +36,10 @@ class ReportRow
 end
 
 class Report
-  def initialize(group_by_key)
+  def initialize
     @column_headings = []
     @cell_classes = []
     @rows = {}
-    @group_by_key = group_by_key
   end
   
   def << (line)
@@ -54,6 +53,10 @@ class Report
   def add_column heading, klass
     @column_headings << heading
     @cell_classes << klass
+  end
+  
+  def group_by(key)
+    @group_by_key = key    
   end
   
   private
