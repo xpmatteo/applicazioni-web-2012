@@ -1,13 +1,11 @@
 
 class ReportCell
-  attr_accessor :value
-
   def initialize(value=nil)
     @value = value
   end
 
   def ==(other)
-    self.value == other.value
+    self.to_s == other.to_s
   end
   
   def to_s
@@ -38,10 +36,11 @@ class ReportRow
 end
 
 class Report
-  def initialize
+  def initialize(group_by_key)
     @column_headings = []
     @cell_classes = []
     @rows = {}
+    @group_by_key = group_by_key
   end
   
   def << (line)
@@ -60,7 +59,7 @@ class Report
   private
   
   def row_for(line)
-    key = line[:date]
+    key = line[@group_by_key]
     unless @rows.key?(key)
       @rows[key] = new_row
     end
@@ -76,3 +75,30 @@ class Report
   end
 end
 
+class FixedColumnWidthPrinter
+  def initialize(width)
+    @width = width
+    @output = ""
+  end
+
+  def <<(row)
+    print_row(row)
+  end
+  
+  def to_s
+    @output
+  end
+  
+  private
+  
+  def print_row(row)
+    row.each do |field|
+      print_field(field)
+    end
+    @output += "\n"    
+  end
+  
+  def print_field(content)
+    @output += sprintf("%#{@width}s", content)
+  end
+end
