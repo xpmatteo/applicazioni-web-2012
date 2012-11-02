@@ -1,20 +1,9 @@
 require "minitest/autorun"
-
-class ReportCell
-  attr_accessor :value
-
-  def initialize(value=nil)
-    @value = value
-  end
-
-  def ==(other)
-    self.value == other.value
-  end
-end
+require_relative "../lib/report"
 
 class DateCell < ReportCell
   def <<(line)
-    @value = line.date
+    @value = line[:date]
   end
 end
 
@@ -25,7 +14,7 @@ class StatusCounter < ReportCell
   end
   
   def << (line)
-    @value += 1 if @range.include?(line.status)
+    @value += 1 if @range.include?(line[:status])
   end
 end
 
@@ -53,75 +42,6 @@ class StatusCounter5xx < StatusCounter
   end
 end
 
-class AccessLine
-  attr_accessor :date, :status
-  
-  def initialize(data)
-    self.date = data[:date]
-    self.status = data[:status].to_i
-  end
-end
-
-class ReportRow
-  attr_accessor :cells
-  
-  def initialize
-    @cells = []
-  end
-  
-  def add_cell(cell)
-    @cells << cell
-  end
-  
-  def << (line)
-    @cells.each do |cell|
-      cell << line
-    end
-  end
-  
-  def ==(other)
-    @cells == other.cells
-  end
-end
-
-class Report
-  def initialize
-    @column_headings = []
-    @cell_classes = []
-    @rows = {}
-  end
-  
-  def << (line)
-    row_for(line) << line
-  end
-  
-  def rows
-    @rows.values
-  end
-  
-  def add_column heading, klass
-    @column_headings << heading
-    @cell_classes << klass
-  end
-  
-  private
-  
-  def row_for(line)
-    key = line.date
-    unless @rows.key?(key)
-      @rows[key] = new_row
-    end
-    @rows[key]
-  end
-  
-  def new_row
-    row = ReportRow.new
-    @cell_classes.each do |column|
-      row.add_cell column.new        
-    end
-    row
-  end
-end
 
 class ReportTest < MiniTest::Unit::TestCase
   def setup
@@ -134,13 +54,13 @@ class ReportTest < MiniTest::Unit::TestCase
   end
   
   def test_add_one_access
-    @report << an_access(date: "1/2/2012", status: "200")
+    @report << an_access(date: "1/2/2012", status: 200)
     assert_equal [a_report_row(date: "1/2/2012", count_2xx: 1)], @report.rows
   end
   
   def test_returns_one_row_per_date
-    @report << an_access(date: "1/2/2012", status: "200")
-    @report << an_access(date: "2/2/2012", status: "200")
+    @report << an_access(date: "1/2/2012", status: 200)
+    @report << an_access(date: "2/2/2012", status: 200)
     assert_equal [
       a_report_row(date: "1/2/2012", count_2xx: 1),
       a_report_row(date: "2/2/2012", count_2xx: 1),
@@ -148,46 +68,46 @@ class ReportTest < MiniTest::Unit::TestCase
   end
   
   def test_adds_2xx_accesses
-    @report << an_access(date: "1/2/2012", status: "200")
-    @report << an_access(date: "1/2/2012", status: "201")
+    @report << an_access(date: "1/2/2012", status: 200)
+    @report << an_access(date: "1/2/2012", status: 201)
     assert_equal [
       a_report_row(date: "1/2/2012", count_2xx: 2),
       ], @report.rows
   end
   
   def test_adds_3xx_accesses
-    @report << an_access(date: "1/2/2012", status: "301")
-    @report << an_access(date: "1/2/2012", status: "302")
+    @report << an_access(date: "1/2/2012", status: 301)
+    @report << an_access(date: "1/2/2012", status: 302)
     assert_equal [
       a_report_row(date: "1/2/2012", count_3xx: 2),
       ], @report.rows
   end
   
   def test_adds_4xx_accesses
-    @report << an_access(date: "1/2/2012", status: "404")
-    @report << an_access(date: "1/2/2012", status: "401")
+    @report << an_access(date: "1/2/2012", status: 404)
+    @report << an_access(date: "1/2/2012", status: 401)
     assert_equal [
       a_report_row(date: "1/2/2012", count_4xx: 2),
       ], @report.rows
   end
 
   def test_adds_5xx_accesses
-    @report << an_access(date: "4/2/2012", status: "500")
-    @report << an_access(date: "4/2/2012", status: "599")
+    @report << an_access(date: "4/2/2012", status: 500)
+    @report << an_access(date: "4/2/2012", status: 599)
     assert_equal [
       a_report_row(date: "4/2/2012", count_5xx: 2),
       ], @report.rows
   end
   
   def test_acceptance
-    @report << an_access(date: "29/Jul/2011", status: "200")
-    @report << an_access(date: "29/Jul/2011", status: "304")
-    @report << an_access(date: "29/Jul/2011", status: "201")
-    @report << an_access(date: "29/Jul/2011", status: "304")
-    @report << an_access(date: "29/Jul/2011", status: "200")
-    @report << an_access(date: "30/Jul/2011", status: "404")
-    @report << an_access(date: "31/Jul/2011", status: "502")
-    @report << an_access(date: "01/Aug/2011", status: "401")
+    @report << an_access(date: "29/Jul/2011", status: 200)
+    @report << an_access(date: "29/Jul/2011", status: 304)
+    @report << an_access(date: "29/Jul/2011", status: 201)
+    @report << an_access(date: "29/Jul/2011", status: 304)
+    @report << an_access(date: "29/Jul/2011", status: 200)
+    @report << an_access(date: "30/Jul/2011", status: 404)
+    @report << an_access(date: "31/Jul/2011", status: 502)
+    @report << an_access(date: "01/Aug/2011", status: 401)
 
     assert_equal [
       a_report_row(date: "29/Jul/2011", count_2xx: 3, count_3xx: 2),
@@ -200,7 +120,7 @@ class ReportTest < MiniTest::Unit::TestCase
   private
   
   def an_access(access_data)
-    AccessLine.new(access_data)
+    access_data
   end
   
   def a_report_row(data)
