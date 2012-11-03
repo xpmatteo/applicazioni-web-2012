@@ -59,6 +59,19 @@ class Report
     @group_by_key = key    
   end
   
+  def read(file)
+    while (line = file.get_line)
+      self << line
+    end
+  end
+  
+  def print_on(printer)
+    printer.print_headings @column_headings
+    rows.each do |row|
+      printer.print_row row
+    end
+  end
+  
   private
   
   def row_for(line)
@@ -78,14 +91,18 @@ class Report
   end
 end
 
-class FixedColumnWidthPrinter
+class PlainTextPrinter
   def initialize(width)
     @width = width
     @output = ""
   end
+  
+  def print_headings(headings)
+    print_array(headings)
+  end
 
-  def <<(row)
-    print_row(row)
+  def print_row(row)
+    print_array(row.cells)
   end
   
   def to_s
@@ -94,8 +111,8 @@ class FixedColumnWidthPrinter
   
   private
   
-  def print_row(row)
-    row.each do |field|
+  def print_array(elements)
+    elements.each do |field|
       print_field(field)
     end
     @output += "\n"    

@@ -1,4 +1,6 @@
 require "minitest/autorun"
+require "stringio"
+require_relative "../lib/access_log"
 require_relative "../lib/report"
 
 class DateCell < ReportCell
@@ -23,7 +25,7 @@ class ReportTest < MiniTest::Unit::TestCase
     @report = Report.new
     @report.group_by :date
     @report.add_column "Date", DateCell
-    @report.add_column "Status 2xx", StatusCounter2xx
+    @report.add_column "2xx", StatusCounter2xx
   end
   
   def test_add_one_access
@@ -46,6 +48,35 @@ class ReportTest < MiniTest::Unit::TestCase
     assert_equal [
       a_report_row(:date => "1/2/2012", :count_2xx => 2),
       ], @report.rows
+  end
+
+  def test_reads_from_file
+    data = <<-EOF
+212.97.38.66 - - [21/Mar/2006:11:21:46 +0100] "GET / HTTP/1.1" 200 6482 "-" "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/417.9 (KHTML, like Gecko) Safari/417.8"
+212.97.38.66 - - [21/Mar/2006:11:21:48 +0100] "GET /insubria_small.png HTTP/1.1" 200 30274 "http://essap.dicom.uninsubria.it/" "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/417.9 (KHTML, like Gecko) Safari/417.8"
+    EOF
+    file = AccessLog.new(StringIO.new(data))
+    
+    @report.read file
+    
+    assert_equal [
+      a_report_row(:date => "21/Mar/2006", :count_2xx => 2),
+      ], @report.rows
+  end
+  
+  def test_prints_on_printer
+    @report << {:date => "1/2/2012", :status => 200}
+    @report << {:date => "1/2/2012", :status => 201}
+
+    printer = PlainTextPrinter.new(8)
+    @report.print_on printer
+
+    expected = <<-EOF
+    Date     2xx
+1/2/2012       2
+    EOF
+    
+    assert_equal expected, printer.to_s
   end
   
   private

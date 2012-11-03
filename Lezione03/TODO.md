@@ -1,15 +1,12 @@
 
- - Report.read 
- - Report.print_on
- 
+# Esercizi
 
- - printer: aggiuntere print_headings e print_row all'interfaccia
+* Aggiungere la colonna 5xx (al 14 settembre ce ne sono due)
+* Output con tabella html
+* Colonna con media di byte mandati
+* Colonna IP differenti
+* Scrivere un nuovo report ordinato per Path
 
- + trovare il file di esempio 
- + AccessLog scrivere
- + costruire lo script
- + rendere generici i test di report
- + togliere il riferimento a :date da Report 
- + eliminare accessline -> hash
- + cell deve usare to_s invece di :value
- 
+
+# TODO
+
