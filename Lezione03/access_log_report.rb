@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative "lib/report"
+require_relative "lib/access_log"
 
 class DateCell < ReportCell
   def <<(line)
@@ -45,7 +46,8 @@ end
 
 class AccessLogReport < Report
   def initialize
-    group_by :date
+    super
+    self.group_by :date
     self.add_column "Date", DateCell
     self.add_column "Status 2xx", StatusCounter2xx    
     self.add_column "Status 3xx", StatusCounter3xx    
@@ -55,7 +57,7 @@ class AccessLogReport < Report
 end
 
 
-access_log = AccessLog.new("access_log")
+access_log = AccessLog.new(File.open("access_log", "r"))
 report = AccessLogReport.new
 printer = FixedColumnWidthPrinter.new(12)
 
