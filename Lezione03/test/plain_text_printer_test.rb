@@ -1,7 +1,7 @@
 require "minitest/autorun"
-require_relative "../lib/report"
+require_relative "../lib/plain_text_printer"
 
-class PrinterTest < MiniTest::Unit::TestCase
+class PlainTextPrinterTest < MiniTest::Unit::TestCase
   def setup
     @printer = PlainTextPrinter.new(3)
   end

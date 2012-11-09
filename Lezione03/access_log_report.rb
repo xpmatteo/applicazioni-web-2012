@@ -1,6 +1,7 @@
 
 require_relative "lib/report"
 require_relative "lib/access_log"
+require_relative "lib/plain_text_printer"
 
 class DateCell < ReportCell
   def <<(line)
