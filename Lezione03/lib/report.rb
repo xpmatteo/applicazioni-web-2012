@@ -113,12 +113,21 @@ class PlainTextPrinter
   
   def print_array(elements)
     elements.each do |field|
-      print_field(field)
+      print_field(field.to_s)
     end
     @output += "\n"    
   end
   
   def print_field(content)
-    @output += sprintf("%#{@width}s", content)
+    padding = spaces(@width - content.length)
+    @output += padding + content
+  end
+  
+  def spaces(length)
+    if length > 0
+      " " * length
+    else
+      ""
+    end
   end
 end
