@@ -22,11 +22,11 @@ class AccessLogTest < MiniTest::Unit::TestCase
 
   def test_reads_fields
     line = @log.get_line
-    assert_equal "21/Mar/2006", line[:date]
-    assert_equal "/", line[:path]
-    assert_equal "212.97.38.66", line[:ip_address]
-    assert_equal 200, line[:status]
-    assert_equal 6482, line[:bytes_sent]
+    assert_equal "21/Mar/2006", line.date
+    assert_equal "/", line.path
+    assert_equal "212.97.38.66", line.ip_address
+    assert_equal 200, line.status
+    assert_equal 6482, line.bytes_sent
   end
   
   private

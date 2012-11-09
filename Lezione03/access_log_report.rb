@@ -4,7 +4,7 @@ require_relative "lib/access_log"
 
 class DateCell < ReportCell
   def <<(line)
-    @value = line[:date]
+    @value = line.date
   end
 end
 
@@ -16,7 +16,7 @@ class StatusCounter < ReportCell
   end
   
   def << (line)
-    status = line[:status]
+    status = line.status
     if status >= @min && status <= @max
       @value += 1 
     end
@@ -43,7 +43,6 @@ end
 
 
 report = Report.new
-report.group_by :date
 report.add_column "Date", DateCell
 report.add_column "Status 2xx", StatusCounter2xx    
 report.add_column "Status 3xx", StatusCounter3xx    

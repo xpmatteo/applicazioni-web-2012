@@ -1,11 +1,12 @@
 require "minitest/autorun"
 require "stringio"
+require "ostruct"
 require_relative "../lib/access_log"
 require_relative "../lib/report"
 
 class DateCell < ReportCell
   def <<(line)
-    @value = line[:date]
+    @value = line.date
   end
 end
 
@@ -15,7 +16,7 @@ class StatusCounter2xx < ReportCell
   end
   
   def << (line)
-    @value += 1 if (200..299).include?(line[:status])
+    @value += 1 if (200..299).include?(line.status)
   end
 end
 
@@ -23,19 +24,18 @@ end
 class ReportTest < MiniTest::Unit::TestCase
   def setup
     @report = Report.new
-    @report.group_by :date
     @report.add_column "Date", DateCell
     @report.add_column "2xx", StatusCounter2xx
   end
   
   def test_add_one_access
-    @report << {:date => "1/2/2012", :status => 200}
+    @report << access_line(:date => "1/2/2012", :status => 200)
     assert_equal [a_report_row(:date => "1/2/2012", :count_2xx => 1)], @report.rows
   end
   
   def test_returns_one_row_per_date
-    @report << {:date => "1/2/2012", :status => 200}
-    @report << {:date => "2/2/2012", :status => 200}
+    @report << access_line(:date => "1/2/2012", :status => 200)
+    @report << access_line(:date => "2/2/2012", :status => 200)
     assert_equal [
       a_report_row(:date => "1/2/2012", :count_2xx => 1),
       a_report_row(:date => "2/2/2012", :count_2xx => 1),
@@ -43,8 +43,8 @@ class ReportTest < MiniTest::Unit::TestCase
   end
   
   def test_adds_2xx_accesses
-    @report << {:date => "1/2/2012", :status => 200}
-    @report << {:date => "1/2/2012", :status => 201}
+    @report << access_line(:date => "1/2/2012", :status => 200)
+    @report << access_line(:date => "1/2/2012", :status => 201)
     assert_equal [
       a_report_row(:date => "1/2/2012", :count_2xx => 2),
       ], @report.rows
@@ -65,8 +65,8 @@ class ReportTest < MiniTest::Unit::TestCase
   end
   
   def test_prints_on_printer
-    @report << {:date => "1/2/2012", :status => 200}
-    @report << {:date => "1/2/2012", :status => 201}
+    @report << access_line(:date => "1/2/2012", :status => 200)
+    @report << access_line(:date => "1/2/2012", :status => 201)
 
     printer = PlainTextPrinter.new(8)
     @report.print_on printer
@@ -80,6 +80,10 @@ class ReportTest < MiniTest::Unit::TestCase
   end
   
   private
+  
+  def access_line(data)
+    OpenStruct.new(data)
+  end
   
   def a_report_row(data)
     row = ReportRow.new

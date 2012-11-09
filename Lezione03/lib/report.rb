@@ -55,10 +55,6 @@ class Report
     @cell_classes << klass
   end
   
-  def group_by(key)
-    @group_by_key = key    
-  end
-  
   def read(file)
     while (line = file.get_line)
       self << line
@@ -75,7 +71,7 @@ class Report
   private
   
   def row_for(line)
-    key = line[@group_by_key]
+    key = line.date
     unless @rows.key?(key)
       @rows[key] = new_row
     end

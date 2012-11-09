@@ -16,17 +16,26 @@ end
 class AccessLogLine
   def initialize(text)
     @text = text
-    @fields = { 
-      :date => match(/\d\d\/\w\w\w\/\d\d\d\d/), 
-      :path => token_number(6), 
-      :ip_address => token_number(0),
-      :status => token_number(8).to_i,
-      :bytes_sent => token_number(9).to_i,
-    }    
   end
   
-  def [](key)
-    @fields[key]
+  def date
+    match(/\d\d\/\w\w\w\/\d\d\d\d/)
+  end
+  
+  def status
+    token_number(8).to_i
+  end
+
+  def ip_address
+    token_number(0)
+  end
+  
+  def bytes_sent
+    token_number(9).to_i
+  end
+  
+  def path
+    token_number(6)
   end
   
   private 
