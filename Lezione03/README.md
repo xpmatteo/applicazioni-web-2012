@@ -65,7 +65,7 @@ Potresti stupirti perché non si vede il ciclo che itera su tutte le righe del r
 
     ruby access_log_report.rb > report.html; firefox report.html
 
-4. (Difficile, facoltativo) Scrivere un nuovo report raggruppato per Path.  Per fare questo occorre andare a modificare la classe Report, per renderla più flessibile.  La `Report.new` deve diventare `Report.new(:date)` nel caso vogliamo un report raggruppato per date, oppure `Report.new(:path)` nel caso vogliamo un report raggruppato per path.  Questo simbolo verrà poi usato per chiedere alla AccessLine la chiave di raggruppamento.  Nota: ovviamente quello che desideriamo è rendere Report ancora più flessibile, per poter scegliere il campo del report su cui raggruppare.  Modificare il Report inchiodando dentro ".path" al posto di ".date" non è il comportamento desiderato!
+4. (Difficile, facoltativo) Scrivere un nuovo report raggruppato per Path.  Per fare questo occorre andare a modificare la classe Report, per renderla più flessibile.  La `Report.new` deve diventare `Report.new(:date)` nel caso vogliamo un report raggruppato per date, oppure `Report.new(:path)` nel caso vogliamo un report raggruppato per path.  Questo simbolo verrà poi usato per chiedere alla AccessLine la chiave di raggruppamento.  Nota: ovviamente quello che desideriamo è rendere Report ancora più flessibile, per poter scegliere il campo su cui raggruppare.  Modificare il Report inchiodando dentro ".path" al posto di ".date" non è la soluzione desiderata!
 
 Per l'ultimo esercizio occorre sapere questo trucco: in Ruby, la maniera normale di invocare un metodo è
 
