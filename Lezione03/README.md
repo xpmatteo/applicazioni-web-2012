@@ -46,7 +46,7 @@ Per iniziare a orientarti nel progetto, leggi il file access_log_report.rb comin
 * PlainTextPrinter si occupa di trasformare il contenuto del report in una
   sequenza di caratteri ASCII.
 
-Quando diamo al Report il comando `read(access_log)`, il Report legge una AccessLine per volta; ciascuna AccessLine viene passata alla sua ReportRow.  ReportRow, a sua volta, passa la AccessLine a ciascuna ReportCell, e la ReportCell si aggiorna con i dati della AccessLine.  Ciascun diverso tipo di ReportCell usa la AccessLine in maniera diversa; lo StatusCounter2xx ad esempio va a vedere lo status, e incrementa il suo valore se lo status è compreso fra 200 e 299.  DateCell invece prende semplicemente il suo valore dalla data dalla AccessLine. 
+Quando diamo al Report il comando `read(access_log)`, il Report legge una AccessLine per volta; ciascuna AccessLine viene passata alla sua ReportRow.  ReportRow, a sua volta, passa la AccessLine a ciascuna ReportCell, e la ReportCell si aggiorna con i dati della AccessLine.  Ciascun diverso tipo di ReportCell usa la AccessLine in maniera diversa; lo StatusCounter2xx ad esempio va a vedere lo status, e incrementa il suo valore se lo status è compreso fra 200 e 299.  DateCell invece prende semplicemente il suo valore dalla data.
 
 Quindi, ragionando ad oggetti, se io sono una ReportCell, allora conosco il mio valore (che è assegnato alla variabile di istanza @value).  Quando mi viene passata una AccessLine, la esamino e aggiorno il mio @value sulla base di una mia regola specifica.
 
