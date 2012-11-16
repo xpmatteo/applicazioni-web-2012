@@ -328,7 +328,7 @@ The chat program is in public domain.  This is not the GNU public license.
 If it breaks then you get to keep both pieces.
 	-- Copyright notice for the chat program
 %
-'Mounten' wird für drei Dinge benutzt: 'Aufsitzen' auf Pferde, 'einklinken'
+'Mounten' wird fÃ¼r drei Dinge benutzt: 'Aufsitzen' auf Pferde, 'einklinken'
 von Festplatten in Dateisysteme, und, nun, 'besteigen' beim Sex.
 	-- Christa Keil
 %
