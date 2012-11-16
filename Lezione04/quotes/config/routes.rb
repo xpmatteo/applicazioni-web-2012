@@ -1,4 +1,8 @@
 Quotes::Application.routes.draw do
+  get "quotes/index"
+
+  get "quotes/random"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

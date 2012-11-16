@@ -7,8 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div id="page">
+    <h1>Quotes database</h1>
+    <p id="navigation">Home / Latest / Random / 0-99 / 100-199 / 200-299 </p>
+    
+    <%= yield %>    
+  </div>
 </body>
 </html>
