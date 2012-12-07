@@ -1,4 +1,12 @@
-Twitter::Application.routes.draw do
+Prova::Application.routes.draw do
+  root :to => 'users#index'
+  get 'users/index', :controller => "users", :action => "index"
+  get 'users/new'
+  get 'users/edit'
+  get 'users/:id', :controller => "users", :action => "show"
+  post 'users/create'
+  post 'users/update'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

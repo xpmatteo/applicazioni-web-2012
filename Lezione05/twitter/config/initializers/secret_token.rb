@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Twitter::Application.config.secret_token = '89a4207b783d86ba344e80f2baf2b0892217a2e3eb283d5ff2172ee61bf08a7e480d19c2e94544de6b432a1c8ba562512421cb61fb41756a7c32977ac9a85561'
+Prova::Application.config.secret_token = 'f77b9c4337b3af8ff233f585d452914cecf056640cf3af51b5c82166aef5cd9e5f8da554a81df23f7f4918e088f97d26768d589ce1a2197170df8d7f4d547459'
