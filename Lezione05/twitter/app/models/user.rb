@@ -51,5 +51,5 @@ class User
   end
 end
 
-User.new(:username => "pippo").save
-User.new(:username => "pluto").save
+User.new(:username => "pippo", :email => "pippo@disney.com").save
+User.new(:username => "pluto", :email => "pluto@disney.com").save
