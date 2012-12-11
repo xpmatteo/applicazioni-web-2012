@@ -35,17 +35,17 @@ E verificare di vedere la home page dell'applicazione alla url http://localhost/
     
 * Modificare la form di tweets/new per accettare anche l'id dell'utente
 
-* Quando mostriamo un tweet, dovrebbe essere in un riquadro tipo
+Quando mostriamo un tweet, dovrebbe essere in un riquadro tipo
 
-    +--------------------------------------------+
-    | @pippo                                     |
-    | Gawrsh! Sono proprio contento di studiare  |
-    | Rails!                                     |
-    |                                     (edit) |
-    +--------------------------------------------+
-    
-    Dove (edit) permette di modificare il messaggio, e
-    @pippo è un link alla pagina dell'utente @pippo
+      +--------------------------------------------+
+      | @pippo                                     |
+      | Gawrsh! Sono proprio contento di studiare  |
+      | Rails!                                     |
+      |                                     (edit) |
+      +--------------------------------------------+
+
+Dove (edit) permette di modificare il messaggio, e
+@pippo è un link alla pagina dell'utente @pippo
 
 * La pagina /users/1 deve mostrare tutti i tweet dell'utente a cui
   appartiene quella pagina
