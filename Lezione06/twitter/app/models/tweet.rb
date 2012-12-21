@@ -16,7 +16,7 @@ class Tweet
     @@tweets.find { |tweet| tweet.id == id.to_i }
   end
   
-  def initialize(params)
+  def initialize(params={})
     @text = params[:text]
     @created_at = Time.now
   end

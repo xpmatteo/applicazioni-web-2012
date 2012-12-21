@@ -1,9 +1,6 @@
-<p>
-  Sono la view di index.html.erb
-</p>
 
+Puoi andare a vedere 
 <ul>
-  <% for personaggio in @personaggi %>
-  <li><%= personaggio %></li>
-  <% end %>
+  <li><%= link_to "Gli utenti", :controller => "users" %></li>
+  <li><%= link_to "I tweet", :controller => "tweets" %></li>
 </ul>

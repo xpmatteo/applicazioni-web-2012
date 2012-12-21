@@ -1,0 +1,17 @@
+<form id="new_tweet" action="/tweets/create" method="post">
+  <p>
+    <textarea name="tweet[text]"></textarea>
+  </p>
+  <p>
+    <input type="submit" value="Update your status" />
+  </p>
+</form>
+
+<ul class="tweets">
+  <% for tweet in @tweets %>
+  <li>
+    <%= tweet.text %>
+  </li>
+  <% end %>
+</ul>
+

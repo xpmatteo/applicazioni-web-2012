@@ -1,11 +1,20 @@
 Prova::Application.routes.draw do
-  root :to => 'users#index'
+  root :to => 'hello#index'
+  
   get 'users(/index)', :controller => "users", :action => "index"
   get 'users/new'
   get 'users/edit'
   get 'users/:id', :controller => "users", :action => "show"
   post 'users/create'
   post 'users/update'
+
+
+  get 'tweets(/index)', :controller => "tweets", :action => "index"
+  get 'tweets/new'
+  get 'tweets/edit'
+  get 'tweets/:id', :controller => "tweets", :action => "show"
+  post 'tweets/create'
+  post 'tweets/update'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
