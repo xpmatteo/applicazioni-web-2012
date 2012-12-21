@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params)
+    @user = User.new(params[:user])
     if @user.save
       redirect_to :action => "show", :id => @user.id
     else
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])  
-    @user.update_attributes(params)  
+    @user.update_attributes(params[:user])  
     redirect_to :action => "show", :id => @user.id
   end
 end
