@@ -1,29 +1,7 @@
 <h2>Iscriviti!</h2>
 
-<div class="error_explanation">
-  <% if @user.errors %>
-  <p>Per favore correggi:</p>
-  <ul>
-    <% for error in @user.errors %>
-    <li><%= error %></li>
-    <% end %>
-  </ul>
-  <% end %>
-</div>
-
 <form action="/users/create" method="post">
-  <p>
-    <label>
-      <span>Username</span>
-      <input type="text" name="user[username]" value="<%= @user.username %>" />
-    </label>
-  </p>
-  <p>
-    <label>
-      <span>Email</span>
-      <input type="text" name="user[email]" value="<%= @user.email %>" />
-    </label>
-  </p>
+  <%= render "form" %>
   <p>
     <input type="submit" value="Iscriviti" />
   </p>
