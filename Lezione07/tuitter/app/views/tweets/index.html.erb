@@ -1,24 +1,24 @@
-<form id="new_tweet" action="/tweets/create" method="post">
-  <p>
-    <textarea name="tweet[text]"></textarea>
-  </p>
-  <p>
-    <label>
-      Sono l'utente 
-      <select name="tweet[user_id]">
-        <% for user in @users %>
-          <option value="<%= user.id %>"><%= user %></option>
-        <% end %>
-      </select>
-    </label>
-  </p>
-  <p>
-    <input type="submit" value="Update your status" />
-  </p>
-  <p>
-    <%= link_to "Iscriviti!", "/users/new" %>
-  </p>
-</form>
+<p>
+  <% if current_user %>
+    Benvenuto <%= current_user %> (<%= link_to "logout", "/sessions/destroy" %>)
+  <% else %>
+    <%= link_to "Please sign in", "/sessions/new" %>
+  <% end %>
+</p>
+<% if current_user %>
+  <form id="new_tweet" action="/tweets/create" method="post">
+    <input type="hidden" name="tweet[user_id]" value="<%= current_user.id %>"/>
+    <p>
+      <textarea name="tweet[text]"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="Update your status" />
+    </p>
+    <p>
+      <%= link_to "Iscriviti!", "/users/new" %>
+    </p>
+  </form>
+<% end %>
 
 <ul class="tweets">
   <% for tweet in @tweets %>

@@ -1,24 +1,6 @@
-Prova::Application.routes.draw do
-
-  root :to => 'tweets#index'
+DemoCookies::Application.routes.draw do
   
-  get 'users(/index)', :controller => "users", :action => "index"
-  get 'users/new'
-  get 'users/edit'
-  get 'users/:id', :controller => "users", :action => "show"
-  post 'users/create'
-  post 'users/update'
-
-  get 'tweets(/index)', :controller => "tweets", :action => "index"
-  get 'tweets/new'
-  get 'tweets/edit'
-  get 'tweets/:id', :controller => "tweets", :action => "show"
-  post 'tweets/create'
-  post 'tweets/update'
-
-  get "sessions/new"
-  post "sessions/create"
-  get "sessions/destroy"
+  root :to => "counter#index"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
