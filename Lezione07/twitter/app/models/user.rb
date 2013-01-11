@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     "@#{username}"
   end
   
+  def authenticate(password)
+    self.password_digest == Digest::SHA1.hexdigest(password)
+  end
+  
   def encrypt_password
     if password.present?
       self.password_digest = Digest::SHA1.hexdigest(self.password)

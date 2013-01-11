@@ -3,9 +3,8 @@ require 'digest/sha1'
 class SessionsController < ApplicationController
   
   def create
-    digest = Digest::SHA1.hexdigest(params[:password])
-    user = User.where(["username = ? and password_digest = ?", params[:username], digest]).first
-    if user
+    user = User.where(["username = ?", params[:username]]).first
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:notice] = "Welcome, #{user.username}!"
       redirect_to "/"
