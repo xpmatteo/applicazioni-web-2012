@@ -8,7 +8,6 @@ Prova::Application.routes.draw do
   post 'users/create'
   post 'users/update'
 
-
   get 'tweets(/index)', :controller => "tweets", :action => "index"
   get 'tweets/new'
   get 'tweets/edit'
@@ -18,7 +17,7 @@ Prova::Application.routes.draw do
   
   get 'sessions/new'
   post 'sessions/create'
-  post 'sessions/destroy'
+  get 'sessions/destroy'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
