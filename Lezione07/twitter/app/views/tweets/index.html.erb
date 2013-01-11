@@ -1,0 +1,29 @@
+<form id="new_tweet" action="/tweets/create" method="post">
+  <p>
+    <textarea name="tweet[text]"></textarea>
+  </p>
+  <p>
+    <label>
+      Sono l'utente 
+      <select name="tweet[user_id]">
+        <% for user in @users %>
+          <option value="<%= user.id %>"><%= user %></option>
+        <% end %>
+      </select>
+    </label>
+  </p>
+  <p>
+    <input type="submit" value="Update your status" />
+  </p>
+  <p>
+    <%= link_to "Iscriviti!", "/users/new" %>
+  </p>
+</form>
+
+<ul class="tweets">
+  <% for tweet in @tweets %>
+  <li>
+    <%= render :partial => "tweet", :locals => {:tweet => tweet} %>
+  </li>
+  <% end %>
+</ul>
