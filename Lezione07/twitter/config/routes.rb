@@ -16,6 +16,10 @@ Prova::Application.routes.draw do
   post 'tweets/create'
   post 'tweets/update'
   
+  get 'sessions/new'
+  post 'sessions/create'
+  post 'sessions/destroy'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
