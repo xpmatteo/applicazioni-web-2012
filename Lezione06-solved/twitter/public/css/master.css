@@ -20,6 +20,10 @@ a:hover { color: #fff; background-color:#000; }
 
 /* layout */
 
+h1 a {
+	text-decoration: none;
+}
+
 div#page {
 	width: 640px;
 	margin: auto;

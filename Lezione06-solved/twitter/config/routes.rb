@@ -1,5 +1,5 @@
 Prova::Application.routes.draw do
-  root :to => 'hello#index'
+  root :to => 'tweets#index'
   
   get 'users(/index)', :controller => "users", :action => "index"
   get 'users/new'
