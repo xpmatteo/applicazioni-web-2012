@@ -2,7 +2,8 @@
   <% if current_user %>
     Benvenuto <%= current_user %> (<%= link_to "logout", "/sessions/destroy" %>)
   <% else %>
-    <%= link_to "Please sign in", "/sessions/new" %>
+    Please <%= link_to "log in", "/sessions/new" %> or 
+    <%= link_to "register", "/users/new" %>
   <% end %>
 </p>
 <% if current_user %>
@@ -13,9 +14,6 @@
     </p>
     <p>
       <input type="submit" value="Update your status" />
-    </p>
-    <p>
-      <%= link_to "Iscriviti!", "/users/new" %>
     </p>
   </form>
 <% end %>
