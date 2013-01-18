@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if current_user.nil?
-      redirect_to "/sessions/new", :notice => "Please log in"
+      flash[:notice] = "Fatti riconoscere"
+      redirect_to "/sessions/new"
     end
   end
   

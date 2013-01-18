@@ -8,7 +8,6 @@
 </p>
 <% if current_user %>
   <form id="new_tweet" action="/tweets/create" method="post">
-    <input type="hidden" name="tweet[user_id]" value="<%= current_user.id %>"/>
     <p>
       <textarea name="tweet[text]"></textarea>
     </p>
@@ -18,10 +17,4 @@
   </form>
 <% end %>
 
-<ul class="tweets">
-  <% for tweet in @tweets %>
-  <li>
-    <%= render :partial => "tweet", :locals => {:tweet => tweet} %>
-  </li>
-  <% end %>
-</ul>
+<%= render :partial => "shared/tweets", :object => @tweets %>
