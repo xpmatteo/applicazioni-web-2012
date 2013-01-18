@@ -1,4 +1,7 @@
 class TweetsController < ApplicationController
+  before_filter :authenticate, :only => :create
+  before_filter :authorize, :only => :create
+
   def index
     @tweets = Tweet.order("created_at desc").all
   end
@@ -11,5 +14,13 @@ class TweetsController < ApplicationController
       flash[:notice] = "Type something!"
     end
     redirect_to :action => "index"
+  end
+  
+  private
+  
+  def authorize
+    if current_user.id != params[:user_id].to_i
+      render :nothing => true, :status => 401
+    end
   end
 end

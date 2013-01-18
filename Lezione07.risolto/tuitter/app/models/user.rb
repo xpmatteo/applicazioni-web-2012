@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :username, :password, :password_confirmation
   validates :username, :presence => true, :length => { :minimum => 3 }
   validates :email, :format => /@/
-  validates :password, :confirmation => true
+  validates :password, :presence => true, :confirmation => true, :on => "create"
   
   def authenticate(password)
     encrypt(password) == self.password_digest
