@@ -15,7 +15,9 @@ class User < ActiveRecord::Base
   end
   
   def encrypt_password
-    self.password_digest = encrypt(password)
+    if self.password
+      self.password_digest = encrypt(password)
+    end
   end
   
   def encrypt(password)

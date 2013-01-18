@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only => :update
+  before_filter :authorize_update_user, :only => :update
+  
   def index
     @users = User.all
   end
@@ -32,6 +35,14 @@ class UsersController < ApplicationController
       redirect_to :action => "show", :id => @user.id
     else
       render "edit"
+    end
+  end
+  
+  private 
+  
+  def authorize_update_user
+    if params[:id].to_i != current_user.id
+      render :nothing => true, :status => 401
     end
   end
 end
