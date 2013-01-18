@@ -11,12 +11,13 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :confirmation => true, :on => "create"
   
   def authenticate(password)
-    encrypt(password) == self.password_digest
+    encrypt(password + self.password_salt) == self.password_digest
   end
   
   def encrypt_password
     if self.password
-      self.password_digest = encrypt(password)
+      self.password_salt = rand(256).to_s(16)
+      self.password_digest = encrypt(password + password_salt)
     end
   end
   

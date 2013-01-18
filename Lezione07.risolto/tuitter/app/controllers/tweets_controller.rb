@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_filter :authenticate, :only => :create
-  before_filter :authorize, :only => :create
+  before_filter :authorize_tweet_update, :only => :create
 
   def index
     @tweets = Tweet.order("created_at desc").all
@@ -18,8 +18,8 @@ class TweetsController < ApplicationController
   
   private
   
-  def authorize
-    if current_user.id != params[:user_id].to_i
+  def authorize_tweet_update
+    if current_user.id != params[:tweet][:user_id].to_i
       render :nothing => true, :status => 401
     end
   end
