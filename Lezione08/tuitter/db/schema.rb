@@ -20,6 +20,10 @@ ActiveRecord::Schema.define(:version => 20130118142402) do
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "followings", ["followed_user_id"], :name => "index_followings_on_followed_user_id"
+  add_index "followings", ["follower_user_id", "followed_user_id"], :name => "index_followings_on_follower_user_id_and_followed_user_id", :unique => true
+  add_index "followings", ["follower_user_id"], :name => "index_followings_on_follower_user_id"
+
   create_table "tweets", :force => true do |t|
     t.text     "text"
     t.datetime "created_at",                 :null => false

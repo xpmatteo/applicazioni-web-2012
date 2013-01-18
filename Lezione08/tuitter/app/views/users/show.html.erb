@@ -1,15 +1,15 @@
 <h2>@<%= @user.username %></h2>
 <p><%= @user.email %></p>
 
-<p>Following <%= @user.people_i_follow.count %></p>
+<p>Following <%= @user.users_that_i_follow.count %></p>
 
 <% if current_user %>
   <p>
-    <% if current_user.not_following @user %>
+    <% if current_user.not_following? @user %>
       <form method="post" action="/followings/create/<%= @user.id %>">
         <input type="submit" value="Follow <%= @user.username %>" />
       </form>
-    <% elsif current_user.following @user %>
+    <% elsif current_user.following? @user %>
       <form method="post" action="/followings/destroy/<%= @user.id %>">
         <input type="submit" value="Unfollow <%= @user.username %>" />
       </form>
