@@ -4,7 +4,6 @@ class TweetsController < ApplicationController
   end
   
   def create
-    raise "non ci casco" if current_user.nil?
     @tweet = Tweet.new(params[:tweet])
     if @tweet.save
       flash[:notice] = "New tweet!"
