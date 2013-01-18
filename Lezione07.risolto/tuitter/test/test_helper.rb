@@ -10,4 +10,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  def create_a_user!
+    User.create! :username => "foo", :email => "foo@bar", :id => 4, :password => "zot"
+  end
+  
+  def log_in(user)
+    session[:user_id] = user.id
+  end
 end

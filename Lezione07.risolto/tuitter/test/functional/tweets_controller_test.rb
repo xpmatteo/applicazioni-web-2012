@@ -3,7 +3,7 @@ require 'test_helper'
 class TweetsControllerTest < ActionController::TestCase
   setup do
     User.delete_all
-    User.create! :username => "foo", :email => "foo@bar", :id => 4, :password => "zot"
+    create_a_user!
   end
   
   test "no post possible unless logged in" do
@@ -12,7 +12,7 @@ class TweetsControllerTest < ActionController::TestCase
   end
   
   test "logged in user can post" do
-    session[:user_id] = User.first.id
+    log_in User.first
     post :create, :user_id => User.first.id
     assert_redirected_to "/"
   end
@@ -22,5 +22,4 @@ class TweetsControllerTest < ActionController::TestCase
     post :create, :user_id => 12345
     assert_response :unauthorized
   end
-  
 end
