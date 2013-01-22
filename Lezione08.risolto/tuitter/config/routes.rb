@@ -6,6 +6,7 @@ Prova::Application.routes.draw do
   get 'users/new'
   get 'users/edit'
   get 'users/:id', :controller => "users", :action => "show"
+  get 'users/followed_by/:id', :controller => "users", :action => "followed_by"
   post 'users/create'
   post 'users/update'
 
@@ -19,6 +20,9 @@ Prova::Application.routes.draw do
   get "sessions/new"
   post "sessions/create"
   get "sessions/destroy"
+  
+  post "followings/create/:followed_user_id", 
+    :controller => "Followings", :action => "create"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

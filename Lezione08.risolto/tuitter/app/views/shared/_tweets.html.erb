@@ -3,7 +3,7 @@
   <li>
     <div class="tweet">
       <div class="header">
-        <%= link_to tweet.user, "/users/#{tweet.user.id}" %>
+        <%= link_to_user tweet.user %>
         <span class="when"><%= time_ago_in_words(tweet.created_at) %></span>
       </div>
       <p class="text">

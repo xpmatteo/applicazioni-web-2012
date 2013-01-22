@@ -38,6 +38,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def followed_by
+    @user = User.find(params[:id])    
+  end
+  
   private 
   
   def authorize_update_user
