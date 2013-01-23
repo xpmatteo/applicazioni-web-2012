@@ -1,33 +1,54 @@
 
-# Un clone di Twitter: associazioni fra le entità
+# Esercizio
+## Categorizzare i tweet
 
-Abbiamo cominciato a sfruttare il supporto di Rails per le associazioni fra le entità, in particolare il metodo "has_many" dei modelli.
+### 0. Approntare il controllo dei sorgenti.
 
-Abbiamo sfruttato il fatto che User has_many :tweets, e che Tweet belongs to User.  In questo modo abbiamo semplificato la protezione per il metodo TweetsController#create.
+Creiamo un nuovo repository con "git init", e committiamo tutto il contenuto di questo progetto con "git add -A", seguito da "git commit".
 
-Poi abbiamo incominciato a implementare il modello di "followings" di Twitter.  Un utente può seguirne un'altro.  Questa relazione è simile alla "friendship" di Facebook, con la differenza che è asimmetrica: io posso decidere di seguire chi voglio, ma quelli che io seguo non hanno alcun obbligo di seguire me. Quindi quando l'applicazione crea un following, l'utente corrente è sempre il follower.
+Poi creiamo un account gratuito su github.com.  Creare un nuovo repository su Github, poi seguire le istruzioni per importare tutto il contenuto del nostro progetto.   
 
-La relazione "following" è una relazione molti-a-molti fra utenti e utenti. Per implementarla, la spezziamo in due relazioni uno-a-molti, definendo una entità intermedia che chiamiamo "Following".  Un istanza di Following significa che l'utente X segue l'utente Y.  Quindi per registrare il fatto che X segue Y, dobbiamo salvare nel database un'istanza di Following.  Analogamente, per fare un "Unfollow", bisogna cancellare dal database un'istanza di Following.
+### 1. Gui e salvataggio
 
-Nota: `followed_user_id` è l'utente che viene seguito.  `Follower_user_id` è l'utente che segue.
+Aggiungiamo all'interfaccia utente un campo di testo che permetta di aggiungere una "categoria" al tweet.
 
-Abbiamo implementato i bottoni di Follow e Unfollow, ma non funzionano ancora.
+Il tweet deve essere implementato come una semplice stringa attributo di Tweet.
 
-## Esercizio
+FATE UN COMMIT A QUESTO PUNTO!!!!
 
-1. Nella home page dell'applicazione, fare in modo che nella scritta "Benvenuto, @tizio", la parola @tizio sia cliccabile.  Deve essere un link che porta alla pagina del profilo di @tizio.
+### 2. Validazione
 
-2. Quando sono loggato e visito la pagina del profilo di un altro utente, vedo apparire un bottone "Follow tizio" oppure "Unfollow tizio".  Se provo a cliccare questi bottoni, non funzionano.  L'esercizio consiste nel farli funzionare!
-  * Suggerimento: iniziare creando un controller "FollowingsController" con azioni create e destroy
-  * Modificare se necessario le route
-  * Aggiungere il codice necessario nel controller per creare o distruggere un following
-  * Nota che per creare un following devo avere due utenti: il follower è implicitamente l'utente corrente, l'altro viene passato nella URL
-  * Ci sono due maniere di creare un Following.  La più semplice è
-    `Following.create(:followed_user_id => ..., :follower_user_id => ...)`.  L'altra è agire sulla collezione `current_user.followings_that_i_follow` chiamando il metodo `create!`.  La maniera migliore è sfruttare il metodo `user.start_following(other_user)` che ho implementato nella classe User
-    
-3. Quando visito la pagina del profilo di un utente, vedo una scritta tipo "Following 12".  Fare in modo che quella scritta sia cliccabile, e porti a una url del tipo "/users/followed_by/678", dove 678 è l'id dell'utente di cui stavamo visitando il profilo.  Quando clicco quel link, deve portarmi ad una pagina che mostra l'elenco degli utenti che sono seguiti dall'utente 678.
-  * Suggerimento: iniziare creando il link nel template views/users/show
-  * Modificare le route per aggiungere una rotta che porta al metodo "followed_by" di UsersController.  Prendere come esempio la rotta di Users#show.
-  * Implementare il metodo followed_by di UsersController.
+* Non deve essere possibile salvare una categoria con il nome vuoto!
+* Il nome della categoria non deve contenere spazi
 
-4. Quando non c'è nessun utente in sessione, la home page mostra l'elenco di tutti i Tweet che ci sono.  Quando invece c'è un utente in sessione, la home page dovrebbe mostrare i tweet di quell'utente, e di tutti gli utenti che segue.  
+FATE UN COMMIT A QUESTO PUNTO!!!!
+
+### 3. Visualizzazione
+
+La categoria deve essere visualizzata nel box del tweet.  Il nome della categoria deve essere cliccabile... e portare a una pagina /categories/nomecategoria che mostra l'elenco dei tweet di quella categoria!
+
+FATE UN COMMIT A QUESTO PUNTO!!!!
+
+### 4. Entità separata
+
+Modificare l'implementazione della categoria; deve ora essere una entità separata.  Va creato il modello Category, la tabella categories, e nel tweet la chiave esterna category_id.
+
+Un buon passo è creare nella classe Category il metodo
+
+  def Category.find_or_create_by_name(name)
+    ...
+  end
+  
+perché questo metodo mi permette di semplificare un bel po' il codice nel controller.
+
+FATE UN COMMIT A QUESTO PUNTO!!!!
+
+La validazione della categoria deve essere spostata da Tweet a Category.  Anche il CategoryController va modificato di conseguenza.
+
+FATE UN COMMIT A QUESTO PUNTO!!!!
+
+### 5. Menu delle categorie
+
+Sotto al campo di testo, fare apparire un menu (select) che riporta l'elenco delle categorie.  L'utente può scegliere la categoria con il menu, oppure digitarla nel campo di testo.
+
+FATE UN COMMIT A QUESTO PUNTO!!!!
