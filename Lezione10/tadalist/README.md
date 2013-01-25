@@ -8,6 +8,8 @@ Il modello dei dati contiene due classi: TodoList e TodoItem.  Una TodoList cont
     TodoList <>--------- TodoItem
     
 Tutto ciò SENZA USARE SCAFFOLD!!!  Sennò non si impara.
+
+Alcune immagini di esempio dalla applicazione Tadalist originale sono nella directory doc/images.  
     
 ## Primo passo: la home page
 
