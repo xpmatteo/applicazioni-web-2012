@@ -10,6 +10,22 @@ Il modello dei dati contiene due classi: TodoList e TodoItem.  Una TodoList cont
 Tutto ciò SENZA USARE SCAFFOLD!!!  Sennò non si impara.
 
 Alcune immagini di esempio dalla applicazione Tadalist originale sono nella directory doc/images.  
+
+## Passo zero: creiamo il progetto
+
+Per creare il progetto consiglio di usare il comando
+
+    rails new tadalist --skip-sprockets
+    
+che crea un progetto Rails leggermente più semplice.  Poi
+
+    cd tadalist
+    git init
+    git add -A
+    git commit -m "Initial import"
+    
+per salvare il progetto su git; questo ci permetterà di tornare sempre indietro a una versione precedente.
+
     
 ## Primo passo: la home page
 
